@@ -1,3 +1,12 @@
+const fs = require("fs");
+
+const writeStream = fs.createWriteStream("single.txt");
+const writeStreamTwo = fs.createWriteStream("double.txt");
+const writeStreamThree = fs.createWriteStream("three.txt");
+const writeStreamFour = fs.createWriteStream("four.txt");
+
+const pathName = writeStream.path;
+
 const runes = [
   "mental",
   "nature",
@@ -20,25 +29,27 @@ const runes = [
 
 function result(numRunes) {
   let results = [];
+  let count = 0;
   switch (numRunes) {
     case 1:
-      return runes;
+      return runes.forEach(value => writeStream.write(`${value}\n`));
     case 2:
       for (let i = 0; i < runes.length - 1; i++) {
         for (let j = i + 1; j < runes.length; j++) {
           results.push(`${runes[i]} ${runes[j]}`);
         }
       }
-      return results;
+      return results.forEach(value => writeStreamTwo.write(`${value}\n`));
     case 3:
       for (let i = 0; i < runes.length - 1; i++) {
         for (let j = i + 1; j < runes.length; j++) {
           for (let k = i + 2; k < runes.length; k++) {
+            count++;
             results.push(`${runes[i]} ${runes[j]} ${runes[k]}`);
           }
         }
       }
-      return results;
+      return results.forEach(value => writeStreamThree.write(`${value}\n`));
     case 4:
       for (let i = 0; i < runes.length - 1; i++) {
         for (let j = i + 1; j < runes.length; j++) {
@@ -49,10 +60,13 @@ function result(numRunes) {
           }
         }
       }
+      return results.forEach(value => writeStreamFour.write(`${value}\n`));
   }
 }
-
-console.log(result(2));
+result(1);
+result(2);
+result(3);
+result(4);
 
 // let results = [];
 // for (let i = 0; i < runes.length - 1; i++) {
